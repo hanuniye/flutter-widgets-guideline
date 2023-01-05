@@ -1,0 +1,83 @@
+example of circular image 
+
+Container(
+    margin: EdgeInsets.all(5),
+    height: 100.0,
+    width: 100.0,
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(50), 
+      //set border radius to 50% of square height and width
+      image: DecorationImage(
+        image: AssetImage("assets/img.png"),
+        fit: BoxFit.cover, //change image fill type
+      ),
+    ),
+);
+
+
+Dotted Border 
+
+you have to install dotted_border package in pubspec.yaml
+
+ DottedBorder(
+              borderType: BorderType.RRect,
+              radius:const Radius.circular(12),
+              dashPattern: const [10,4],
+              strokeCap: StrokeCap.round,
+              child: Container(
+                height: 200,
+                width: double.infinity,
+              ),
+  	),
+
+
+pick image from your mobile storage
+
+
+ Future<List<File>>pickImage() async {
+  List<File> images = [];
+  try {
+    var files = await FilePicker.platform.pickFiles(
+      type: FileType.image, //typeka file aad rabtid sida image,audio,video,custom
+      allowMultiple: true // inta aad marki soo qadi kadhid files allowMultiple: true waa marki images badan so qad
+    );
+
+    if(files != null && files.files.isNotEmpty){
+      for(int i = 0; i < files.files.length; i++){
+        images.add(File(files.files[i].path!));
+      }
+    }
+  } catch (e) {
+    debugPrint(e.toString());
+  }
+
+  return images;
+}
+
+
+DropdownButton waa button aad select greynkadhid item aad rabto
+
+List<String> categories = [
+"banana",
+"mango",
+"guava",
+"others"
+];
+
+String category = "banana";
+
+DropdownButton(
+                  value: category,
+                  items: categories.map((e) {
+                    return DropdownMenuItem(
+                      value: e,
+                      child: Text(e),
+                    );
+                  }).toList(),
+                  icon: Icon(Icons.arrow_drop_down),
+                  onChanged: (val) {
+                    setState(() {
+                      category = val!;
+                    });
+                  },
+                ),
